@@ -30,6 +30,11 @@ def get_air_mass_ratio(altitude_deg):
     return result
 #end get_air_mass_ratio
 
+def get_extraterrestrial_flux(day):
+    # from Masters, p. 411
+    return 1377 * (1 + 0.034 * math.cos((360 * day) / 365))
+#end get_extraterrestrial_flux
+
 def get_apparent_extraterrestrial_flux(day):
     # from Masters, p. 412
     return 1160 + (75 * math.sin(2 * math.pi / 365 * (day - 275)))
@@ -47,7 +52,7 @@ def get_diffuse_skyfactor(day):
 
 def get_direct_radiation(when, altitude_deg):
     # from Masters, p. 412
-    if altitude_deg < 0:
+    if int(altitude_deg) <= 0:
         return 0.0
     day = when.utctimetuple().tm_yday
     flux = get_apparent_extraterrestrial_flux(day)
